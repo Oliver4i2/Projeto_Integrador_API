@@ -1,0 +1,17 @@
+{
+  "name": "GovChain ID",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-azuretools.vscode-docker"
+  ],
+  "forwardPorts": [8000],
+  "postCreateCommand": "pip install -r requirements.txt && python manage.py migrate",
+  "remoteUser": "vscode"
+}
