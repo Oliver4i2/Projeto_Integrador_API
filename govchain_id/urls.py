@@ -1,7 +1,10 @@
-from django.urls import path
-from .views import IssuerView, CredentialView
+from django.contrib import admin
+from django.urls import path, include
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
-    path('issuers/', IssuerView.as_view(), name='issuer'),
-    path('credentials/', CredentialView.as_view(), name='credential'),
+    path('admin/', admin.site.urls),
+    path('api/', include('credentials.urls')),  # importa urls do app credentials
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
