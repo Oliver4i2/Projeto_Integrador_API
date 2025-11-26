@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Issuer, Credential
+from .models import Issuer, Credential, Subject
 
 class IssuerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,3 +11,8 @@ class CredentialSerializer(serializers.ModelSerializer):
         model = Credential
         fields = '__all__'
         read_only_fields = ['hash', 'issued_at']
+
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = '__all__'

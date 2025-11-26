@@ -3,10 +3,25 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 
-from .models import Issuer, Credential
-from .serializers import IssuerSerializer, CredentialSerializer
+from .models import Issuer, Credential, Subject
+from .serializers import IssuerSerializer, CredentialSerializer, SubjectSerializer
 from .utils.blockchain import generate_credential_hash
 
+
+class SubjectView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        subjects = Subject.objects.all()
+        serializer = SubjectSerializer(subjects, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = SubjectSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class IssuerView(APIView):
     permission_classes = [AllowAny]
