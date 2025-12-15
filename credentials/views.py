@@ -1,53 +1,47 @@
-from rest_framework.views import APIView
+from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import AllowAny
 
 from .models import Issuer, Credential, Subject
 from .serializers import IssuerSerializer, CredentialSerializer, SubjectSerializer
 from .utils.blockchain import generate_credential_hash
 
 
-class SubjectView(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-        subjects = Subject.objects.all()
-        serializer = SubjectSerializer(subjects, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request):
-        serializer = SubjectSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class IssuerView(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-        issuers = Issuer.objects.all()
-        serializer = IssuerSerializer(issuers, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request):
-        serializer = IssuerSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# -------- SUBJECT --------
+class SubjectListCreateView(ListCreateAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+    permission_classes = [DjangoModelPermissions]
 
 
-class CredentialView(APIView):
-    permission_classes = [AllowAny]
+class SubjectDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+    permission_classes = [DjangoModelPermissions]
 
-    def get(self, request):
-        credentials = Credential.objects.all()
-        serializer = CredentialSerializer(credentials, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request):
+# -------- ISSUER --------
+class IssuerListCreateView(ListCreateAPIView):
+    queryset = Issuer.objects.all()
+    serializer_class = IssuerSerializer
+    permission_classes = [DjangoModelPermissions]
+
+
+class IssuerDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Issuer.objects.all()
+    serializer_class = IssuerSerializer
+    permission_classes = [DjangoModelPermissions]
+
+
+# -------- CREDENTIAL --------
+class CredentialListCreateView(ListCreateAPIView):
+    queryset = Credential.objects.all()
+    serializer_class = CredentialSerializer
+    permission_classes = [DjangoModelPermissions]
+
+    def create(self, request, *args, **kwargs):
         data = request.data
         try:
             hash_value = generate_credential_hash(data.get('data'))
@@ -61,9 +55,12 @@ class CredentialView(APIView):
             serializer = CredentialSerializer(credential)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CredentialDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Credential.objects.all()
+    serializer_class = CredentialSerializer
+    permission_classes = [DjangoModelPermissions]
 
 
