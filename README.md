@@ -35,9 +35,11 @@ O projeto utiliza as seguintes bibliotecas principais:
 | :--- | :---: | :--- |
 | **Django** | `5.0` | Framework web principal de alto nível. |
 | **Django REST Framework** | `Latest` | Toolkit poderoso para construção de APIs Web. |
-| **django-environ** | `Latest` | Gerenciamento seguro de variáveis de ambiente (.env). |
+| **django-cors-headers** | `Latest` | GPermite requisições cross-origin (CORS), útil para integração com front-end. |
 | **drf-yasg** | `Latest` | Geração automática de documentação Swagger/Redoc. |
-| **Pillow** | `Latest` | Biblioteca de processamento de imagens. |
+| **python-decouple** | `Latest` | Gerenciamento de variáveis de ambiente via .env . |
+| **PyJWT** | `Latest` | Geração e verificação de tokens JWT para autenticação. |
+| **bcrypt** | `Latest` | Hashing de senhas seguro (opcional, se usado no projeto). |
 
 > *Consulte o arquivo `requirements.txt` para a lista completa de dependências.*
 
