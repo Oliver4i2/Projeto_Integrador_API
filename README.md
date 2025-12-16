@@ -83,6 +83,15 @@ A documentação interativa completa (Swagger UI) está disponível em `/api/doc
 | `GET` | `/api/subjects/{id}/credentials/` | Lista histórico de credenciais de um titular. | 🔒 Sim |
 | `GET` | `/api/issuers/{id}/credentials/` | Lista credenciais emitidas por uma instituição. | 🔒 Sim |
 
+⚙️ Instalação e Configuração
+Siga os passos abaixo para configurar e rodar o projeto localmente.
+
+1. Clone o repositório
+```Bash
+git clone [https://github.com/Oliver4i2/govchain.git](https://github.com/Oliver4i2/govchain.git)
+cd govchain
+```
+
 
 
 
