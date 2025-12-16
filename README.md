@@ -76,6 +76,8 @@ govchain/
 
 A documentação interativa completa (Swagger UI) está disponível em `/api/docs/` ou `/api/redoc/` após iniciar o servidor.
 
+-----
+
 ### Principais Rotas
 
 | Método | Endpoint | Descrição | Autenticação |
