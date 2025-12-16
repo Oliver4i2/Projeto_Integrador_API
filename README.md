@@ -87,15 +87,18 @@ A documentação interativa completa (Swagger UI) está disponível em `/api/doc
 | `GET` | `/api/subjects/{id}/credentials/` | Lista histórico de credenciais de um titular. | 🔒 Sim |
 | `GET` | `/api/issuers/{id}/credentials/` | Lista credenciais emitidas por uma instituição. | 🔒 Sim |
 
+-----
+
 ⚙️ Instalação e Configuração
 Siga os passos abaixo para configurar e rodar o projeto localmente.
-
+-----
 1. Clone o repositório
 Bash
 ```
 git clone [https://github.com/Oliver4i2/govchain.git](https://github.com/Oliver4i2/govchain.git)
 cd govchain
 ```
+-----
 2. Crie o Ambiente Virtual
 Bash
 ```
@@ -107,17 +110,20 @@ source venv/bin/activate
 python -m venv venv
 venv\Scripts\activate
 ```
+-----
 3. Instale as Dependências
 Bash
 ```
 pip install -r requirements.txt
 ```
+-----
 4. Variáveis de Ambiente
 Copie o arquivo de exemplo e configure suas credenciais (Secret Key, Debug, Banco de Dados):
 Bash
 ```
 cp .env.example .env
 ```
+-----
 5. Banco de Dados e Permissões
 Aplique as migrações e execute o script customizado para criar os grupos de acesso iniciais:
 Bash
@@ -125,13 +131,16 @@ Bash
 python manage.py migrate
 python manage.py setup_roles
 ```
+-----
 6. Inicie o Servidor
 Bash
 ```
 python manage.py runserver
 ```
+-----
 Acesse em: http://127.0.0.1:8000/
 
+-----
 🚀 Deploy (Opcional)
 O projeto está configurado para facilitar o deploy em plataformas como Render, Railway ou AWS.
 
@@ -140,6 +149,7 @@ Plaintext
 ```
 web: gunicorn govchain_id.wsgi:application --log-file -
 ```
+-----
 Passos pós-deploy
 Configure as variáveis de ambiente no painel da sua hospedagem.
 
@@ -149,7 +159,7 @@ Bash
 python manage.py migrate
 python manage.py collectstatic
 ```
-
+-----
 
 
 
