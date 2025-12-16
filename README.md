@@ -49,7 +49,7 @@ O projeto utiliza as seguintes bibliotecas principais:
 
 Abaixo está a árvore de diretórios principal do sistema:
 
-```text
+
 govchain/
 ├── manage.py                   # Utilitário de linha de comando do Django
 ├── requirements.txt            # Dependências do projeto
@@ -66,8 +66,6 @@ govchain/
 ├── scripts/
 │   └── setup_roles.py          # Script para criação automática de grupos/permissões
 └── docs/                       # Documentação estática e diagramas
-
-
 
 
 
