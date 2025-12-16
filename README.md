@@ -71,14 +71,17 @@ govchain/
 <img width="1024" height="1024" alt="Entity-Relationship " src="https://github.com/user-attachments/assets/62ff6b92-8eb5-4daf-93c6-95ad867ab97c" />
 
 ## 🔌 Endpoints da API
-A documentação interativa completa (Swagger UI) está disponível em /api/docs/ ou /api/redoc/ após iniciar o servidor.
-```text
-Método,Endpoint,Descrição,Autenticação
-GET,/api/credentials/,Lista todas as credenciais registradas.,🔒 Sim
-POST,/api/credentials/,Emite uma nova credencial (Gera Hash/Bloco).,🔒 Sim
-GET,/api/subjects/{id}/credentials/,Lista histórico de credenciais de um titular.,🔒 Sim
-GET,/api/issuers/{id}/credentials/,Lista credenciais emitidas por uma instituição.,🔒 Sim
-```
+
+A documentação interativa completa (Swagger UI) está disponível em `/api/docs/` ou `/api/redoc/` após iniciar o servidor.
+
+### Principais Rotas
+
+| Método | Endpoint | Descrição | Autenticação |
+| :---: | :--- | :--- | :---: |
+| `GET` | `/api/credentials/` | Lista todas as credenciais registradas. | 🔒 Sim |
+| `POST` | `/api/credentials/` | Emite uma nova credencial (Gera Hash/Bloco). | 🔒 Sim |
+| `GET` | `/api/subjects/{id}/credentials/` | Lista histórico de credenciais de um titular. | 🔒 Sim |
+| `GET` | `/api/issuers/{id}/credentials/` | Lista credenciais emitidas por uma instituição. | 🔒 Sim |
 
 
 
