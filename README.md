@@ -67,12 +67,6 @@ govchain/
 │   └── setup_roles.py          # Script para criação automática de grupos/permissões
 └── docs/                       # Documentação estática e diagramas
 
-Método,Endpoint,Descrição,Autenticação
-GET,/api/credentials/,Lista todas as credenciais registradas.,🔒 Sim
-POST,/api/credentials/,Emite uma nova credencial (Gera Hash/Bloco).,🔒 Sim
-GET,/api/subjects/{id}/credentials/,Lista histórico de credenciais de um titular.,🔒 Sim
-GET,/api/issuers/{id}/credentials/,Lista credenciais emitidas por uma instituição.,🔒 Sim
-
 
 
 
