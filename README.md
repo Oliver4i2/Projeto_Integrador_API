@@ -69,7 +69,72 @@ govchain/
 ```
 ## 🧩 Banco de Dados
 <img width="1024" height="1024" alt="Entity-Relationship " src="https://github.com/user-attachments/assets/62ff6b92-8eb5-4daf-93c6-95ad867ab97c" />
+1. Issuer (Emissor)
+Função: Representa a instituição ou entidade responsável por emitir credenciais.
 
+Campos críticos:
+
+id: chave primária única.
+
+name: nome da instituição emissora.
+
+did: identificador descentralizado (Decentralized Identifier), usado para garantir autenticidade.
+
+Observação: Um emissor pode emitir várias credenciais.
+
+2. Subject (Titular)
+Função: Representa o indivíduo ou organização que recebe a credencial.
+
+Campos críticos:
+
+id: chave primária única.
+
+name: nome do titular.
+
+did: identificador descentralizado, garantindo unicidade e rastreabilidade.
+
+Observação: Um titular pode receber várias credenciais.
+
+3. Credential (Credencial)
+Função: Documento digital emitido pelo Issuer e vinculado a um Subject.
+
+Campos críticos:
+
+id: chave primária única.
+
+issuer_id: chave estrangeira que referencia o emissor.
+
+subject_did: chave estrangeira que referencia o titular.
+
+type: tipo da credencial (ex: diploma, certificado, identidade).
+
+data: informações específicas da credencial (JSON ou texto estruturado).
+
+hash: valor criptográfico que garante integridade e imutabilidade.
+
+timestamp: data/hora da emissão.
+
+Observação: É a entidade central do sistema, conectando Issuer e Subject.
+
+🔗 Relacionamentos
+Issuer → Credential:
+
+Tipo: 1:N
+
+Descrição: Um emissor pode emitir várias credenciais, mas cada credencial pertence a apenas um emissor.
+
+Subject → Credential:
+
+Tipo: 1:N
+
+Descrição: Um titular pode receber várias credenciais, mas cada credencial pertence a apenas um titular.
+
+⚠️ Campos Críticos para Segurança
+did (Issuer e Subject): garante unicidade e autenticidade dos atores.
+
+hash (Credential): protege contra adulteração e assegura integridade dos dados.
+
+timestamp (Credential): registra o momento da emissão, essencial para auditoria e rastreabilidade.
 -----
 
 ## 🔌 Endpoints da API
