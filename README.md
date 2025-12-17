@@ -70,7 +70,7 @@ govchain/
 ## 🧩 Banco de Dados
 <img width="1024" height="1024" alt="Entity-Relationship " src="https://github.com/user-attachments/assets/62ff6b92-8eb5-4daf-93c6-95ad867ab97c" />
 
-1. Issuer (Emissor)
+## Issuer (Emissor)
 Função: Representa a instituição ou entidade responsável por emitir credenciais.
 
 Campos críticos:
@@ -83,7 +83,7 @@ did: identificador descentralizado (Decentralized Identifier), usado para garant
 
 Observação: Um emissor pode emitir várias credenciais.
 
-2. Subject (Titular)
+## Subject (Titular)
 Função: Representa o indivíduo ou organização que recebe a credencial.
 
 Campos críticos:
@@ -96,7 +96,7 @@ did: identificador descentralizado, garantindo unicidade e rastreabilidade.
 
 Observação: Um titular pode receber várias credenciais.
 
-3. Credential (Credencial)
+## Credential (Credencial)
 Função: Documento digital emitido pelo Issuer e vinculado a um Subject.
 
 Campos críticos:
@@ -117,7 +117,7 @@ timestamp: data/hora da emissão.
 
 Observação: É a entidade central do sistema, conectando Issuer e Subject.
 
-🔗 Relacionamentos
+## Relacionamentos
 Issuer → Credential:
 
 Tipo: 1:N
@@ -130,7 +130,7 @@ Tipo: 1:N
 
 Descrição: Um titular pode receber várias credenciais, mas cada credencial pertence a apenas um titular.
 
-⚠️ Campos Críticos para Segurança
+## Campos Críticos para Segurança
 did (Issuer e Subject): garante unicidade e autenticidade dos atores.
 
 hash (Credential): protege contra adulteração e assegura integridade dos dados.
