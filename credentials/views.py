@@ -1,66 +1,66 @@
-from rest_framework.permissions import DjangoModelPermissions
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from rest_framework import status
+from django.contrib.auth.views import LoginView as DjangoLoginView, LogoutView as DjangoLogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView, ListView, DetailView
+from .models import Credential, Issuer, Subject
 
-from .models import Issuer, Credential, Subject
-from .serializers import IssuerSerializer, CredentialSerializer, SubjectSerializer
-from .utils.blockchain import generate_credential_hash
-
-
-# -------- SUBJECT --------
-class SubjectListCreateView(ListCreateAPIView):
-    queryset = Subject.objects.all()
-    serializer_class = SubjectSerializer
-    permission_classes = [DjangoModelPermissions]
+# -------- AUTENTICAÇÃO --------
+class LoginView(DjangoLoginView):
+    """Tela de login usando autenticação padrão do Django."""
+    template_name = 'login.html'
 
 
-class SubjectDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = Subject.objects.all()
-    serializer_class = SubjectSerializer
-    permission_classes = [DjangoModelPermissions]
+class LogoutView(DjangoLogoutView):
+    """Logout simples, redireciona conforme settings.LOGOUT_REDIRECT_URL."""
+    pass
 
 
-# -------- ISSUER --------
-class IssuerListCreateView(ListCreateAPIView):
-    queryset = Issuer.objects.all()
-    serializer_class = IssuerSerializer
-    permission_classes = [DjangoModelPermissions]
+# -------- DASHBOARD --------
+class DashboardView(LoginRequiredMixin, TemplateView):
+    """Dashboard com estatísticas gerais do sistema."""
+    template_name = 'dashboard.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['total_credentials'] = Credential.objects.count()
+        ctx['total_issuers'] = Issuer.objects.count()
+        ctx['total_subjects'] = Subject.objects.count()
 
-class IssuerDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = Issuer.objects.all()
-    serializer_class = IssuerSerializer
-    permission_classes = [DjangoModelPermissions]
+        # Top emissores e titulares (ordenados por quantidade de credenciais)
+        ctx['top_issuers'] = Issuer.objects.annotate(num_credentials=models.Count('credentials')).order_by('-num_credentials')[:5]
+        ctx['top_subjects'] = Subject.objects.annotate(num_credentials=models.Count('credentials')).order_by('-num_credentials')[:5]
+
+        # Últimas credenciais emitidas
+        ctx['latest_credentials'] = Credential.objects.select_related('issuer', 'subject').order_by('-timestamp')[:10]
+        return ctx
 
 
 # -------- CREDENTIAL --------
-class CredentialListCreateView(ListCreateAPIView):
-    queryset = Credential.objects.all()
-    serializer_class = CredentialSerializer
-    permission_classes = [DjangoModelPermissions]
-
-    def create(self, request, *args, **kwargs):
-        data = request.data
-        try:
-            hash_value = generate_credential_hash(data.get('data'))
-            credential = Credential.objects.create(
-                issuer_id=data.get('issuer'),
-                subject_did=data.get('subject_did'),
-                credential_type=data.get('credential_type'),
-                data=data.get('data'),
-                hash=hash_value
-            )
-            serializer = CredentialSerializer(credential)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+class CredentialListView(LoginRequiredMixin, ListView):
+    """Lista de credenciais emitidas."""
+    model = Credential
+    template_name = 'credentials/list.html'
+    context_object_name = 'credentials'
+    paginate_by = 20
 
 
-class CredentialDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = Credential.objects.all()
-    serializer_class = CredentialSerializer
-    permission_classes = [DjangoModelPermissions]
+class CredentialDetailView(LoginRequiredMixin, DetailView):
+    """Detalhe de uma credencial específica."""
+    model = Credential
+    template_name = 'credentials/detail.html'
+    context_object_name = 'credential'
 
 
+# -------- ISSUER --------
+class IssuerListView(LoginRequiredMixin, ListView):
+    """Lista de emissores cadastrados."""
+    model = Issuer
+    template_name = 'issuers/list.html'
+    context_object_name = 'issuers'
+
+
+# -------- SUBJECT --------
+class SubjectListView(LoginRequiredMixin, ListView):
+    """Lista de titulares cadastrados."""
+    model = Subject
+    template_name = 'subjects/list.html'
+    context_object_name = 'subjects'

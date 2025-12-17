@@ -1,29 +1,33 @@
 from django.db import models
+from django.utils import timezone
+
 
 class Issuer(models.Model):
+    """Entidade emissora de credenciais (ex: universidade, órgão público)."""
     name = models.CharField(max_length=255)
     did = models.CharField(max_length=255, unique=True)  # Decentralized Identifier
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
-class Credential(models.Model):
-    issuer = models.ForeignKey('Issuer', on_delete=models.CASCADE, related_name='credentials')
-    subject = models.ForeignKey('Subject', on_delete=models.CASCADE, related_name='credentials', null=True, blank=True)
-    credential_type = models.CharField(max_length=255)
-    data = models.JSONField()
-    hash = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f"{self.credential_type} - {self.subject.did}"
-
 
 class Subject(models.Model):
-    did = models.CharField(max_length=255, unique=True)  # identificador descentralizado
+    """Titular da credencial (ex: estudante, cidadão)."""
     name = models.CharField(max_length=255)
-    email = models.EmailField(blank=True, null=True)
-    birth_date = models.DateField(blank=True, null=True)
+    did = models.CharField(max_length=255, unique=True)  # Identificador descentralizado
 
     def __str__(self):
-        return f"{self.name} ({self.did})"
+        return self.name
+
+
+class Credential(models.Model):
+    """Credencial emitida e registrada na blockchain."""
+    issuer = models.ForeignKey(Issuer, on_delete=models.PROTECT, related_name='credentials')
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT, related_name='credentials')
+    type = models.CharField(max_length=100, default="credential")  # Tipo da credencial (ex: diploma, identidade)
+    data = models.JSONField()  # Dados da credencial
+    hash = models.CharField(max_length=64, editable=False)  # Hash SHA-256
+    timestamp = models.DateTimeField(auto_now_add=True)  # Registro de criação
+
+    def __str__(self):
+        return f'{self.type} - {self.subject.name}'

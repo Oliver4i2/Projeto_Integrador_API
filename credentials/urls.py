@@ -1,20 +1,27 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .api_views import IssuerViewSet, SubjectViewSet, CredentialViewSet
 from .views import (
-    IssuerListCreateView, IssuerDetailView,
-    SubjectListCreateView, SubjectDetailView,
-    CredentialListCreateView, CredentialDetailView
+    CredentialListView,
+    CredentialDetailView,
+    IssuerListView,
+    SubjectListView,
+    DashboardView,
 )
 
+router = DefaultRouter()
+router.register(r'issuers', IssuerViewSet)
+router.register(r'subjects', SubjectViewSet)
+router.register(r'credentials', CredentialViewSet)
+
 urlpatterns = [
-    # Subjects
-    path('subjects/', SubjectListCreateView.as_view(), name='subject-list-create'),
-    path('subjects/<int:pk>/', SubjectDetailView.as_view(), name='subject-detail'),
+    # HTML views
+    path('credentials/', CredentialListView.as_view(), name='credentials-list'),
+    path('credentials/<int:pk>/', CredentialDetailView.as_view(), name='credentials-detail'),
+    path('issuers/', IssuerListView.as_view(), name='issuers-list'),
+    path('subjects/', SubjectListView.as_view(), name='subjects-list'),
+    path('dashboard/', DashboardView.as_view(), name='dashboard'),
 
-    # Issuers
-    path('issuers/', IssuerListCreateView.as_view(), name='issuer-list-create'),
-    path('issuers/<int:pk>/', IssuerDetailView.as_view(), name='issuer-detail'),
-
-    # Credentials
-    path('credentials/', CredentialListCreateView.as_view(), name='credential-list-create'),
-    path('credentials/<int:pk>/', CredentialDetailView.as_view(), name='credential-detail'),
+    # API endpoints
+    path('api/', include(router.urls)),
 ]

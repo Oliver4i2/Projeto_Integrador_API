@@ -1,0 +1,41 @@
+# Arquivos compilados do Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+
+# Banco de dados local
+db.sqlite3
+
+# Arquivos temporários
+*.log
+*.pot
+*.py[cod]
+init_structure.sh.save*
+
+# Configurações locais
+.env
+*.env
+.env.*
+
+# Arquivos de migração gerados automaticamente
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# Arquivos de mídia e estáticos gerados
+media/
+staticfiles/
+static/
+
+# Arquivos de IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos de backup
+*.bak
+*.tmp
+*.save
+
