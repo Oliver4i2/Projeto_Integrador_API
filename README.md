@@ -1,4 +1,6 @@
+📖 GovChain ID – README
 
+🚀 Visão Geral
 
 O GovChain ID é uma plataforma para emissão e verificação de credenciais digitais verificáveis, integrando Django REST Framework com blockchain para garantir autenticidade, integridade e transparência.
 
@@ -121,7 +123,3 @@ Em produção, recomenda-se JWT ou OAuth2.
 [ ] Implementar autenticação JWT
 
 [ ] Dashboard com estatísticas avançadas
-
-👉 Esse README já está pronto para ser adicionado ao repositório.
-
-Quer que eu já te monte o comando Git para salvar esse README.md na branch feature/blockchain-frontend e commitar direto?
