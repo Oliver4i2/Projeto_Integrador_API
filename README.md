@@ -47,3 +47,13 @@ python manage.py createsuperuser
 ```bash
 python manage.py runserver
 ```
+## 🌐 Endpoints Principais
+| Recurso | Endpoint | Descrição |
+| :--- | :---: | :--- |
+| **Issuers** | `GET /api/issuers/,POST /api/issuers/` | Framework web principal de alto nível. |
+| **Django REST Framework** | `Latest` | Toolkit poderoso para construção de APIs Web. |
+| **django-cors-headers** | `Latest` | GPermite requisições cross-origin (CORS), útil para integração com front-end. |
+| **drf-yasg** | `Latest` | Geração automática de documentação Swagger/Redoc. |
+| **python-decouple** | `Latest` | Gerenciamento de variáveis de ambiente via .env . |
+| **PyJWT** | `Latest` | Geração e verificação de tokens JWT para autenticação. |
+| **bcrypt** | `Latest` | Hashing de senhas seguro (opcional, se usado no projeto). |
