@@ -29,3 +29,20 @@ A estrutura de dados é baseada em três pilares principais:
 git clone [https://github.com/seu-usuario/govchain_id.git](https://github.com/seu-usuario/govchain_id.git)
 cd govchain_id
 git checkout feature/blockchain-frontend
+
+2. Instalar dependências
+Bash
+
+pip install -r requirements.txt
+3. Aplicar migrations
+Bash
+
+python manage.py migrate
+4. Criar superusuário (Admin)
+Bash
+
+python manage.py createsuperuser
+5. Rodar servidor
+Bash
+
+python manage.py runserver
