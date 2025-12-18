@@ -50,10 +50,61 @@ python manage.py runserver
 ## 🌐 Endpoints Principais
 | Recurso | Endpoint | Descrição |
 | :--- | :---: | :--- |
-| **Issuers** | `GET /api/issuers/,POST /api/issuers/` | Framework web principal de alto nível. |
-| **Django REST Framework** | `Latest` | Toolkit poderoso para construção de APIs Web. |
-| **django-cors-headers** | `Latest` | GPermite requisições cross-origin (CORS), útil para integração com front-end. |
-| **drf-yasg** | `Latest` | Geração automática de documentação Swagger/Redoc. |
-| **python-decouple** | `Latest` | Gerenciamento de variáveis de ambiente via .env . |
-| **PyJWT** | `Latest` | Geração e verificação de tokens JWT para autenticação. |
-| **bcrypt** | `Latest` | Hashing de senhas seguro (opcional, se usado no projeto). |
+| **Issuers** | `GET /api/issuers/, POST /api/issuers/` | Lista emissores, Cria novo emissor. |
+| **Subjects** | `GET /api/subjects/, POST /api/subjects/` | Lista titulares, Cria novo titular. |
+| **Credentials** | `GET /api/credentials/, POST /api/credentials/` | Lista credenciais, Cria nova credencial. |
+
+## 🧪 Exemplos de Uso (cURL)
+➡️ Criar Emissor
+```bash
+curl -X POST [http://127.0.0.1:8000/api/issuers/](http://127.0.0.1:8000/api/issuers/) \
+-H "Content-Type: application/json" \
+-d '{"name": "Universidade X", "did": "did:example:issuer1"}'
+```
+➡️ Criar Titular
+```bash
+curl -X POST [http://127.0.0.1:8000/api/subjects/](http://127.0.0.1:8000/api/subjects/) \
+-H "Content-Type: application/json" \
+-d '{"name": "Pedro", "did": "did:example:subject1"}'
+```
+➡️ Emitir Credencial
+```bash
+curl -X POST [http://127.0.0.1:8000/api/credentials/](http://127.0.0.1:8000/api/credentials/) \
+-H "Content-Type: application/json" \
+-d '{
+  "issuer": 1,
+  "subject": 1,
+  "type": "Diploma",
+  "data": {"curso": "Engenharia", "ano": 2025},
+  "hash": "abc123..."
+}'
+```
+## 📑 Documentação
+Acesse as rotas abaixo com o servidor rodando para visualizar a documentação interativa:
+
+Swagger UI: http://127.0.0.1:8000/api/docs/
+
+OpenAPI Schema: http://127.0.0.1:8000/api/schema/
+
+🔒 Autenticação
+Por padrão, os endpoints exigem login. Para fins de desenvolvimento, você pode alterar as permissões no settings.py:
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
+}
+```
+Nota: Em ambiente de produção, recomenda-se fortemente o uso de JWT ou OAuth2.
+
+## 📌 Roadmap
+[x] CRUD de emissores, titulares e credenciais
+
+[x] Integração com blockchain para registro de hash
+
+[x] Documentação Swagger
+
+[ ] Implementar autenticação JWT
+
+[ ] Dashboard com estatísticas avançadas
