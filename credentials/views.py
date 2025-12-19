@@ -47,7 +47,7 @@ class CredentialListCreateView(ListCreateAPIView):
             hash_value = generate_credential_hash(data.get('data'))
             credential = Credential.objects.create(
                 issuer_id=data.get('issuer'),
-                subject_did=data.get('subject_did'),
+                subject_id=data.get('subject'),
                 credential_type=data.get('credential_type'),
                 data=data.get('data'),
                 hash=hash_value
